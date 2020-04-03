@@ -4,8 +4,9 @@ from botocore.exceptions import ClientError
 import logging
 import pandas as pd
 
-
+# Download URL
 url = 'https://www.arcgis.com/sharing/rest/content/items/e5fd11150d274bebaaf8fe2a7a2bda11/data'
+bucket_name = ""
 
 def upload_file(file_name, bucket, object_name=None):
     """Upload a file to an S3 bucket
@@ -35,4 +36,4 @@ def lambda_handler(event, context):
         f.write(myfile.content)
     data_xls = pd.read_excel('/tmp/cov_data.xlsx')
     data_xls = data_xls.to_csv('/tmp/cov_data.csv',encoding='utf-8')
-    upload_file('/tmp/cov_data.csv','ben.gs-covid-data', "cov_data.csv")
+    upload_file('/tmp/cov_data.csv', bucket_name, "cov_data.csv")
